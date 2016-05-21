@@ -24,6 +24,23 @@ describe('content', function () {
     assert(content.pages)
     assert(Array.isArray(content.pages))
   })
+  
+  it('has a menuPages array', function () {
+    assert(content.menuPages)
+    assert(Array.isArray(content.menuPages))
+  })
+  it('has a menuPages array, which contains each item in pages', function () {
+    content.pages.forEach(function (page) {
+      var found = false
+      content.menuPages.forEach(function (pageInAliases) {
+        if (page.title == pageInAliases.title && page.href == pageInAliases.href) {
+          found = true
+        }
+      })
+      assert(found)
+    })
+    assert(content.menuPages.length > content.pages.length)
+  })
 
   describe('section', function () {
     it('always has a title', function () {
@@ -101,6 +118,31 @@ describe('content', function () {
       assert(content.pages.length)
       content.pages.forEach(function (page) {
         assert(page.edit_url)
+      })
+    })
+  })
+  
+  describe('menuPage', function () {
+    it('always has a title', function () {
+      assert(content.menuPages.length)
+      content.menuPages.forEach(function (page) {
+        assert(page.title)
+      })
+    })
+    it('always has a section', function () {
+      assert(content.menuPages.length)
+      content.menuPages.forEach(function (page) {
+        assert(page.section)
+      })
+    })
+    it('has an href or aliasHref as appropriate', function () {
+      assert(content.menuPages.length)
+      content.menuPages.forEach(function (page) {
+        if (page.isAlias) {
+          assert(page.aliasHref)
+        } else {
+          assert(page.href)
+        }
       })
     })
   })

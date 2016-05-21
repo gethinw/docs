@@ -36,8 +36,12 @@
         </h2>
 
         <div class="pages">
-          {{#each pages}}
-            <a href="{{href}}" {{#equal href ../../page.href}}class="active"{{/equal}}>{{title}}</a>
+          {{#each menuPages}}
+            {{#if isAlias}}
+              <a href="{{aliasHref}}" class="alias">{{title}} → {{isAlias}}</a>
+            {{else}}
+              <a href="{{href}}" {{#equal href ../../page.href}}class="active"{{/equal}}>{{title}}</a>
+            {{/if}}
           {{/each}}
         </div>
 

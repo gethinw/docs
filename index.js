@@ -21,6 +21,9 @@ content.sections.forEach(function (section) {
   section.pages = content.pages.filter(function (page) {
     return section.id === page.section
   })
+  section.menuPages = content.menuPages.filter(function (page) {
+    return section.id === page.section
+  })
 
   // Sort section pages if any of the pages have an `order` property
   // Pages without the order property will come last

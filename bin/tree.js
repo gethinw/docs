@@ -10,6 +10,7 @@ var marky = require('marky-markdown')
 var frontmatter = require('html-frontmatter')
 var mansplain = require('mansplain')
 var _ = require('lodash')
+var aliases = require('../lib/aliases');
 
 var merge = _.merge
 
@@ -106,7 +107,19 @@ emitter.on('end', function () {
   // Get the ids for each section
   var sectionIds = _.map(content.sections, 'id')
 
+  //add in aliases, for cli sidebar
+  content.menuPages = content.pages.concat(aliases.generate());
+
   content.pages = _.sortBy(content.pages, [
+    function (page) {
+      return sectionIds.indexOf(page.section)
+    },
+    function (page) {
+      return page.title.toLowerCase()
+    }
+  ])
+
+  content.menuPages = _.sortBy(content.menuPages, [
     function (page) {
       return sectionIds.indexOf(page.section)
     },
